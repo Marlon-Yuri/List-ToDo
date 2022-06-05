@@ -23,6 +23,7 @@ display: flex;
 justify-content:space-evenly;
 font-family: 'Anton', sans-serif;
 font-size:1.6vw;
+margin-top:13%;
 `
 export const Input = styled.input`
 width:20vw;
