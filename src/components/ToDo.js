@@ -11,12 +11,14 @@ const GlobalStyle = createGlobalStyle`
 export default function ToDo() {
     const [input, setInput] = useState()
     const [task, setTask] = useState([])
-
     const refInput = useRef()
 
     useEffect(() =>{
         document.title = `Marlon's ToDo`
         refInput.current.focus()
+        if(localStorage.getItem('localTask')){
+            setTask(JSON.parse(localStorage.getItem('localTask')))
+          }
     } ,[])
 
 const Add=() =>{
@@ -30,10 +32,17 @@ const Add=() =>{
     }
     setInput('')
     setTask(oldList => [...oldList , infos])
+    localStorage.setItem('localTask', JSON.stringify([...task , infos]))
 }
 function Delete(id){
     const listDelete = task.filter(tarefa => tarefa.id !== id)
     setTask(listDelete)
+    localStorage.setItem('localTask', JSON.stringify(listDelete))
+}
+
+function Clean(){
+    setTask([])
+    localStorage.removeItem('localTask')
 }
 
     return (
@@ -58,7 +67,7 @@ function Delete(id){
             </S.Todo>
            
         </S.Container>
-        <S.BtnClean onClick={()=>{setTask([])}}></S.BtnClean>
+        <S.BtnClean onClick={()=>{Clean()}}></S.BtnClean>
         </form>
     )
 }
