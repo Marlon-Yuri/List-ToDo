@@ -27,8 +27,9 @@ const Add=() =>{
         return
     }
     let infos = {
-        id: Math.floor(Math.random() * 100),
-        value: input
+        id: Date.now(),
+        value: input,
+        status: false
     }
     setInput('')
     setTask(oldList => [...oldList , infos])
@@ -45,6 +46,11 @@ function Clean(){
     localStorage.removeItem('localTask')
 }
 
+function isMarked(id){
+    const MarkedOption = task.map(item => item.id === id.id ? {...item, status: !id.status} : item )
+    setTask(MarkedOption)
+}
+
     return (
         <form onSubmit={e => e.preventDefault()}>
         <S.Container>
@@ -57,7 +63,9 @@ function Clean(){
             <S.List>
             <ol>
                 {task.map(tarefa =>(
-                    <li>{tarefa.value}
+                    <li style={{textDecoration : tarefa.status ? 'line-through' :''}}>
+                    <input type='checkbox' onClick={() =>{isMarked(tarefa)}}/>   
+                    {tarefa.value}
                     <button style={{borderStyle:'none', cursor:'pointer'}} onClick={() =>{Delete(tarefa.id)}}>🗑️</button>
                     </li>
                     
