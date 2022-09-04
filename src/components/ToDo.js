@@ -51,6 +51,10 @@ function isMarked(id){
     setTask(MarkedOption)
 }
 
+
+useEffect(() =>{
+console.log('Welcome to My taskList')
+},[])
     return (
         <form onSubmit={e => e.preventDefault()}>
         <S.Container>
@@ -63,9 +67,9 @@ function isMarked(id){
             <S.List>
             <ol>
                 {task.map(tarefa =>(
-                    <li style={{textDecoration : tarefa.status ? 'line-through' :''}}>
+                    <li key={tarefa.id} style={{textDecoration : tarefa.status ? 'line-through' :''}}>
                     <input type='checkbox' onClick={() =>{isMarked(tarefa)}}/>   
-                    {tarefa.value}
+                    {tarefa.value || ''}
                     <button style={{borderStyle:'none', cursor:'pointer'}} onClick={() =>{Delete(tarefa.id)}}>🗑️</button>
                     </li>
                     
